@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+@import 'tw-elements/css/tw-elements.min.css';
+@import "tailwindcss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Outfit", sans-serif;
+}
+
+:root {
+  --color-primary: rgb(4, 4, 163);
+  --color-secondary: #04B4EA;
+}
+
+.bg-color-primary {
+  background-color: var(--color-primary);
+}
+
+
+body {
+  background-color: #eeeeee;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.site-container {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
