@@ -1,6 +1,6 @@
 .home {
     width: 100%;
-    min-height: 100vh;
+    min-height: 85vh;
     background: linear-gradient(rgba(11, 5, 51, 0.7), rgba(6, 1, 39, 0.7)), url('../../assets/Img/home.png');
     background-size: cover;
     background-position: center;
@@ -26,17 +26,17 @@
     line-height: 1.4;
 }
 
-.home-text span{
+.home-text span {
     color: var(--color-primary);
 }
 
 
-@media (max-width: 840px){
+@media (max-width: 840px) {
     .home {
-        background: linear-gradient(rgba(8,0,58,0.7), rgba(8,0,58,0.7)), url('../../assets/images/banner-home-mobile.png');
+        background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)), url('../../assets/images/banner-home-mobile.png');
     }
 
-    .home-text h1{
+    .home-text h1 {
         font-size: 2rem
     }
 }
