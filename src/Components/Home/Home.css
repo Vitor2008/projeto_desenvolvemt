@@ -1,7 +1,7 @@
 .home {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(rgba(148, 133, 248, 0.7), rgba(23, 4, 145, 0.7)), url('../../assets/Img/home.png');
+    background: linear-gradient(rgba(11, 5, 51, 0.7), rgba(6, 1, 39, 0.7)), url('../../assets/Img/home.png');
     background-size: cover;
     background-position: center;
     color: white;
