@@ -1,83 +1,83 @@
-// import { useEffect, useState } from "react";
-// import { useNavigate, useLocation } from "react-router-dom";
-// import { buscarDesaparecidos, buscarDetalheDesaparecido, buscarDesaparecidosComFiltro } from "../../Services/DesaparecidosServices";
-// import FotoPessoa  from '../../Helper/FotoPessoa';
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { buscarDesaparecidos, buscarDetalheDesaparecido, buscarDesaparecidosComFiltro } from "../../Services/DesaparecidosServices";
+import FotoPessoa  from '../../Helper/FotoPessoa';
 
-// interface Desaparecido {
-//   id: number;
-//   nome: string;
-//   idade: number;
-//   urlFoto: string;
-//   vivo: boolean;
-//   ultimaOcorrencia: {
-//     localDesaparecimentoConcat: string;
-//     dataDesaparecimento: string,
-//     dataLocalizacao: string
-//   };
-// }
+interface Desaparecido {
+  id: number;
+  nome: string;
+  idade: number;
+  urlFoto: string;
+  vivo: boolean;
+  ultimaOcorrencia: {
+    localDesaparecimentoConcat: string;
+    dataDesaparecimento: string,
+    dataLocalizacao: string
+  };
+}
 
 const Desaparecidos = () => {
 
-  // const [desaparecidos, setDesaparecidos] = useState<Desaparecido[]>([]);
-  // const [paginaAtual, setPaginaAtual] = useState(1);
-  // const [itensPorPagina] = useState(10); // Parametriza a quantidades de cards por página
-  // const navigate = useNavigate();
+  const [desaparecidos, setDesaparecidos] = useState<Desaparecido[]>([]);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [itensPorPagina] = useState(10); // Parametriza a quantidades de cards por página
+  const navigate = useNavigate();
 
-  // const location = useLocation();
+  const location = useLocation();
 
-  // const [nome, setNome] = useState(location.state?.nome || "");
-  // const [faixaIdadeInicial, setIdadeMin] = useState(location.state?.faixaIdadeInicial || "");
-  // const [faixaIdadeFinal, setIdadeMax] = useState(location.state?.faixaIdadeFinal || "");
-  // const [sexo, setSexo] = useState(location.state?.sexo || "");
-  // const [status, setStatus] = useState(location.state?.status || "");
+  const [nome, setNome] = useState(location.state?.nome || "");
+  const [faixaIdadeInicial, setIdadeMin] = useState(location.state?.faixaIdadeInicial || "");
+  const [faixaIdadeFinal, setIdadeMax] = useState(location.state?.faixaIdadeFinal || "");
+  const [sexo, setSexo] = useState(location.state?.sexo || "");
+  const [status, setStatus] = useState(location.state?.status || "");
+  
 
+  useEffect(() => {
+    const obterDesaparecidos = async () => {
+      const dados = await buscarDesaparecidos();
+      setDesaparecidos(dados);
+    };
+    
+    obterDesaparecidos();
 
-  // useEffect(() => {
-  //   const obterDesaparecidos = async () => {
-  //     const dados = await buscarDesaparecidos();
-  //     setDesaparecidos(dados);
-  //   };
+    // Se houver filtros salvos no state, aciona a pesquisa automaticamente
+    if (location.state) {
+      handlePesquisar();
+    }
+  }, [location.state]);
 
-  //   obterDesaparecidos();
+  const handlePesquisar = async () => {
+    try {
+      const filtros = {
+        nome: nome,
+        ffaixaIdadeInicial: faixaIdadeInicial ? Number(faixaIdadeInicial) : undefined,
+        faixaIdadeFinal: faixaIdadeFinal ? Number(faixaIdadeFinal) : undefined,
+        sexo: sexo as "MASCULINO" | "FEMININO" | undefined,
+        status: status as "DESAPARECIDO" | "LOCALIZADO" | undefined,
+      };
 
-  //   // Se houver filtros salvos no state, aciona a pesquisa automaticamente
-  //   if (location.state) {
-  //     handlePesquisar();
-  //   }
-  // }, [location.state]);
+      const dadosFiltrados = await buscarDesaparecidosComFiltro(filtros);
+      setDesaparecidos(dadosFiltrados);
+      setPaginaAtual(1); 
+    } catch (error) {
+      console.error("Erro ao buscar desaparecidos com filtro:", error);
+    }
+  };
 
-  // const handlePesquisar = async () => {
-  //   try {
-  //     const filtros = {
-  //       nome: nome,
-  //       ffaixaIdadeInicial: faixaIdadeInicial ? Number(faixaIdadeInicial) : undefined,
-  //       faixaIdadeFinal: faixaIdadeFinal ? Number(faixaIdadeFinal) : undefined,
-  //       sexo: sexo as "MASCULINO" | "FEMININO" | undefined,
-  //       status: status as "DESAPARECIDO" | "LOCALIZADO" | undefined,
-  //     };
+  const handleDetalhesClick = async (id: number) => {
+    try {
+      const detalhes = await buscarDetalheDesaparecido(id);
+      navigate(`/detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
+    } catch (error) {
+      console.error("Erro ao buscar detalhes:", error);
+    }
+  };
 
-  //     const dadosFiltrados = await buscarDesaparecidosComFiltro(filtros);
-  //     setDesaparecidos(dadosFiltrados);
-  //     setPaginaAtual(1); 
-  //   } catch (error) {
-  //     console.error("Erro ao buscar desaparecidos com filtro:", error);
-  //   }
-  // };
+  const indiceUltimoItem = paginaAtual * itensPorPagina;
+  const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
+  const desaparecidosPaginados = desaparecidos.slice(indicePrimeiroItem, indiceUltimoItem);
 
-  // const handleDetalhesClick = async (id: number) => {
-  //   try {
-  //     const detalhes = await buscarDetalheDesaparecido(id);
-  //     navigate(`/detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
-  //   } catch (error) {
-  //     console.error("Erro ao buscar detalhes:", error);
-  //   }
-  // };
-
-  // const indiceUltimoItem = paginaAtual * itensPorPagina;
-  // const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
-  // const desaparecidosPaginados = desaparecidos.slice(indicePrimeiroItem, indiceUltimoItem);
-
-  // const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
+  const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
 
   return (
     <div className="p-10">
@@ -92,8 +92,8 @@ const Desaparecidos = () => {
             <input
               type="text"
               placeholder="Digite o nome"
-              //value={nome}
-              //onChange={(e) => setNome(e.target.value)}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -104,15 +104,15 @@ const Desaparecidos = () => {
               <input
                 type="number"
                 placeholder="Idade mínima"
-                //value={faixaIdadeInicial}
-                //onChange={(e) => setIdadeMin(e.target.value)}
+                value={faixaIdadeInicial}
+                onChange={(e) => setIdadeMin(e.target.value)}
                 className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="number"
                 placeholder="Idade máxima"
-                //value={faixaIdadeFinal}
-                //onChange={(e) => setIdadeMax(e.target.value)}
+                value={faixaIdadeFinal}
+                onChange={(e) => setIdadeMax(e.target.value)}
                 className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -121,8 +121,8 @@ const Desaparecidos = () => {
           <div>
             <label className="block text-gray-700 font-semibold mb-1">Sexo</label>
             <select
-              //value={sexo}
-              //onChange={(e) => setSexo(e.target.value)}
+              value={sexo}
+              onChange={(e) => setSexo(e.target.value)}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Selecione</option>
@@ -135,7 +135,7 @@ const Desaparecidos = () => {
             <label className="block text-gray-700 font-semibold mb-1">Status</label>
             <select
               value={status}
-              //onChange={(e) => setStatus(e.target.value)}
+              onChange={(e) => setStatus(e.target.value)}
               className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Selecione</option>
@@ -146,7 +146,7 @@ const Desaparecidos = () => {
           <div className="md:col-span-2 lg:col-span-3 flex justify-end">
             <button
               type="button"
-              //onClick={handlePesquisar}
+              onClick={handlePesquisar}
               className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer transition"
             >
               Pesquisar
@@ -159,7 +159,7 @@ const Desaparecidos = () => {
         Pessoas Desaparecidas
       </h1>
 
-      {/* {desaparecidosPaginados.length < 1 ?
+     {desaparecidosPaginados.length < 1 ?
       <p className="mt-5 text-center text-lg font-bold text-red-500">Nenhuma informação encontrada!</p> : 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-cinza p-4">
         {desaparecidosPaginados.map((desaparecido) => (
@@ -183,14 +183,14 @@ const Desaparecidos = () => {
           </div>
         ))}
       </div>
-     } */}
+     }
 
-      {/* <p className="text-lg font-bold text-gray-700 mt-4 text-azul-4">
+      <p className="text-lg font-bold text-gray-700 mt-4 text-azul-4">
         Total encontrados: {desaparecidos.length}
-      </p> */}
+      </p>
 
       {/* Paginação */}
-      {/* <div className="flex items-center mt-6 space-x-2">
+      <div className="flex items-center mt-6 space-x-2">
         <button
           className={`px-4 py-2 rounded-l-md transition cursor-pointer ${
             paginaAtual === 1
@@ -218,7 +218,7 @@ const Desaparecidos = () => {
         >
           Próxima
         </button>
-      </div> */}
+      </div>
     </div>
   )
 }
