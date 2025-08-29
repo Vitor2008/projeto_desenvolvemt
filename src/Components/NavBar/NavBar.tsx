@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const [mobileMenu, setMobileMenu] = useState(false);
   const toggleMenu = () => {
-    mobileMenu ? setMobileMenu(false) : setMobileMenu(true);
+    setMobileMenu(!mobileMenu);
   }
 
   return (
@@ -33,7 +33,7 @@ const Navbar = () => {
           <span><FontAwesomeIcon icon={faInstagram} /> PortalDesaparecidosOficial</span>
         </div>
         <div className='nav-body bg-white'>
-          <div className='container-nav py-2 flex justify-between items-center z-10'>
+          <div className='container-nav py-2 flex justify-between items-center'>
             <div className='container-logo'>
               <div className='flex items-center justify-center gap-1'>
                 <img src={logo} alt="Logo" width={40} loading='lazy' />

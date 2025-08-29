@@ -2,6 +2,7 @@ import { Carousel, initTWE } from "tw-elements";
 import { useEffect } from "react";
 import { Link } from 'react-scroll';
 import "./Home.css"
+import Button from "../Button/Button";
 
 const Home = () => {
   
@@ -13,23 +14,14 @@ const Home = () => {
     <div className="home site-container">
       <div className="home-text">
         <h1 className="font-bold text-white-800 leading-tight">
-          Proteja sua empresa com <span>consultoria especializada</span> em segurança do
-          trabalho
+          Conectamos pessoas e informações para <span>localizar desaparecidos</span> e reunir famílias.
         </h1>
-        <p className="text-xl">Oferecemos treinamentos, análises de risco e consultoria completa 
-        para manter sua equipe segura e sua empresa em conformidade com as normas regulamentadoras.
+        <p className="text-xl">Cada compartilhamento aumenta as 
+          chances de reencontro. Junte-se a essa missão e contribua para trazer esperança.
         </p>
         <div className="flex items-center justify-center gap-4">
-          
-         <Link to="contact" smooth={true} offset={-260} duration={500}>
-            <button className="btn">
-              Solicitar Orçamento
-            </button>
-          </Link>
           <Link to='services' smooth={true} offset={-360} duration={500}>
-            <button className="btn-white">
-              Conheça nossos serviços
-            </button>
+            <Button text='Buscar Desaparecido'></Button>
           </Link>
         </div>
       </div>
