@@ -8,11 +8,19 @@
 }
 
 .title h2 {
-    font-size: 20px;
+    font-size: 18px;
     padding: 0 100px 0 100px;
-    color: black;
     margin-top: 5px;
     text-transform: none;
+    font-weight: normal;
+}
+
+.color-text {
+    color: #000000;
+}
+
+.color-white {
+    color: white !important;
 }
 
 

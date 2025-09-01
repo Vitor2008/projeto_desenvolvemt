@@ -9,11 +9,14 @@ function App() {
     <div>
       <Navbar />
       <Home />
-      <div className='site-container'>
+      <div className='site-container bg-gradient'>
         <Title subTitle="Sobre o Portal" title="O Portal de Pessoas Desaparecidas 
-        é uma plataforma dedicada a auxiliar famílias e autoridades na 
-        busca e localização de pessoas desaparecidas em todo o Brasil." classColor=""></Title>
+           é uma plataforma dedicada a auxiliar famílias e autoridades na 
+           busca e localização de pessoas desaparecidas em todo o Brasil." classColor="color-white" />
         <About />
+      </div>
+      <div className='site-container'>
+        <Title subTitle="Buscar Pessoas Desaparecidas" title="" classColor=""/>
         <Desaparecidos />
       </div>
     </div>

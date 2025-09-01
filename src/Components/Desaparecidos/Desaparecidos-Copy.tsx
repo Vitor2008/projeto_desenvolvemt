@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { buscarDesaparecidos, buscarDetalheDesaparecido, buscarDesaparecidosComFiltro } from "../../Services/DesaparecidosServices";
-import FotoPessoa  from '../../Helper/FotoPessoa';
+import FotoPessoa from '../../Helper/FotoPessoa';
 
-interface Desaparecido {
+interface DesaparecidosCopy {
   id: number;
   nome: string;
   idade: number;
@@ -16,9 +16,9 @@ interface Desaparecido {
   };
 }
 
-const Desaparecidos = () => {
+const DesaparecidosCopy = () => {
 
-  const [desaparecidos, setDesaparecidos] = useState<Desaparecido[]>([]);
+  const [desaparecidos, setDesaparecidos] = useState<DesaparecidosCopy[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [itensPorPagina] = useState(10); // Parametriza a quantidades de cards por página
   const navigate = useNavigate();
@@ -30,14 +30,14 @@ const Desaparecidos = () => {
   const [faixaIdadeFinal, setIdadeMax] = useState(location.state?.faixaIdadeFinal || "");
   const [sexo, setSexo] = useState(location.state?.sexo || "");
   const [status, setStatus] = useState(location.state?.status || "");
-  
+
 
   useEffect(() => {
     const obterDesaparecidos = async () => {
       const dados = await buscarDesaparecidos();
       setDesaparecidos(dados);
     };
-    
+
     obterDesaparecidos();
 
     // Se houver filtros salvos no state, aciona a pesquisa automaticamente
@@ -58,7 +58,7 @@ const Desaparecidos = () => {
 
       const dadosFiltrados = await buscarDesaparecidosComFiltro(filtros);
       setDesaparecidos(dadosFiltrados);
-      setPaginaAtual(1); 
+      setPaginaAtual(1);
     } catch (error) {
       console.error("Erro ao buscar desaparecidos com filtro:", error);
     }
@@ -159,31 +159,31 @@ const Desaparecidos = () => {
         Pessoas Desaparecidas
       </h1>
 
-     {desaparecidosPaginados.length < 1 ?
-      <p className="mt-5 text-center text-lg font-bold text-red-500">Nenhuma informação encontrada!</p> : 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-cinza p-4">
-        {desaparecidosPaginados.map((desaparecido) => (
-          <div
-            key={desaparecido.id}
-            className="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg hover-card transition"
-            onClick={() => handleDetalhesClick(desaparecido.id)}
-          >
-            <FotoPessoa 
-              url={desaparecido.urlFoto}
-              alt={desaparecido.nome}
-              className="w-full h-48 object-cover rounded-md mb-4"
-            />
-            <h2 className="text-lg font-semibold uppercase">{desaparecido.nome}</h2>
-            <h2 className={`text-lg font-semibold uppercase ${desaparecido.ultimaOcorrencia.dataLocalizacao === null ? "text-red-600": "text-green-600"}`}>{desaparecido.ultimaOcorrencia.dataLocalizacao === null ? "Desaparecido": "Localizado"}</h2>
-            <p>{desaparecido.idade} anos</p>
-            <p className={"mt-1 font-bold"}>
-              Local desaparecimento:
-            </p>
-            <p className="font-semibold">{desaparecido.ultimaOcorrencia.localDesaparecimentoConcat}</p>
-          </div>
-        ))}
-      </div>
-     }
+      {desaparecidosPaginados.length < 1 ?
+        <p className="mt-5 text-center text-lg font-bold text-red-500">Nenhuma informação encontrada!</p> :
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 bg-cinza p-4">
+          {desaparecidosPaginados.map((desaparecido) => (
+            <div
+              key={desaparecido.id}
+              className="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:shadow-lg hover-card transition"
+              onClick={() => handleDetalhesClick(desaparecido.id)}
+            >
+              <FotoPessoa
+                url={desaparecido.urlFoto}
+                alt={desaparecido.nome}
+                className="w-full h-48 object-cover rounded-md mb-4"
+              />
+              <h2 className="text-lg font-semibold uppercase">{desaparecido.nome}</h2>
+              <h2 className={`text-lg font-semibold uppercase ${desaparecido.ultimaOcorrencia.dataLocalizacao === null ? "text-red-600" : "text-green-600"}`}>{desaparecido.ultimaOcorrencia.dataLocalizacao === null ? "Desaparecido" : "Localizado"}</h2>
+              <p>{desaparecido.idade} anos</p>
+              <p className={"mt-1 font-bold"}>
+                Local desaparecimento:
+              </p>
+              <p className="font-semibold">{desaparecido.ultimaOcorrencia.localDesaparecimentoConcat}</p>
+            </div>
+          ))}
+        </div>
+      }
 
       <p className="text-lg font-bold text-gray-700 mt-4 text-azul-4">
         Total encontrados: {desaparecidos.length}
@@ -192,11 +192,10 @@ const Desaparecidos = () => {
       {/* Paginação */}
       <div className="flex items-center mt-6 space-x-2">
         <button
-          className={`px-4 py-2 rounded-l-md transition cursor-pointer ${
-            paginaAtual === 1
+          className={`px-4 py-2 rounded-l-md transition cursor-pointer ${paginaAtual === 1
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
+            }`}
           disabled={paginaAtual === 1}
           onClick={() => setPaginaAtual(paginaAtual - 1)}
         >
@@ -208,11 +207,10 @@ const Desaparecidos = () => {
         </span>
 
         <button
-          className={`px-4 py-2 rounded-r-md transition cursor-pointer ${
-            paginaAtual >= totalPaginas || desaparecidos.length <= itensPorPagina
+          className={`px-4 py-2 rounded-r-md transition cursor-pointer ${paginaAtual >= totalPaginas || desaparecidos.length <= itensPorPagina
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
               : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
+            }`}
           disabled={paginaAtual >= totalPaginas || desaparecidos.length <= itensPorPagina}
           onClick={() => setPaginaAtual(paginaAtual + 1)}
         >
@@ -223,4 +221,4 @@ const Desaparecidos = () => {
   )
 }
 
-export default Desaparecidos
+export default DesaparecidosCopy

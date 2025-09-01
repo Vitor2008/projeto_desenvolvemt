@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`${sticky ? 'dark-nav' : ''} w-ful`}>
+      <nav className={`${sticky ? 'dark-nav' : ''} w-full`}>
         <div className='nav-header bg-color-primary p-2 flex justify-center gap-4 container-nav text-white md:text-base'>
           <span><FontAwesomeIcon icon={faPhone} /> (65) 3336-0000</span>
           <span ><FontAwesomeIcon icon={faClock} /> 7h às 17h</span>

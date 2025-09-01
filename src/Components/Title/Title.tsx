@@ -9,9 +9,9 @@ interface TitleProps {
 
 const Title: React.FC<TitleProps> = ({ subTitle, title, classColor }) => {
     return (
-        <div className={`title ${classColor}`}>
+        <div className='title'>
             <p>{subTitle}</p>
-            <h2>{title}</h2>
+            <h2 className={`${classColor}`}>{title}</h2>
         </div>
     )
 }
