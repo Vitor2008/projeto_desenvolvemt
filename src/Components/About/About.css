@@ -1,3 +1,7 @@
 .about{
     min-height: 50vh;
 }
+
+.about .grid{
+    justify-items: center;
+}

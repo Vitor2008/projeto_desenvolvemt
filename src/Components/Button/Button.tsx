@@ -1,19 +1,21 @@
 import React from 'react'
 import './Button.css'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface TextButton {
     text: string;
     type?: 'button' | 'submit' | 'reset';
     onClick?: () => void;
+    icon: IconDefinition;
+    color: string;
 }
 
-const Button: React.FC<TextButton> = ({ text, type = 'button', onClick }) => {
+const Button: React.FC<TextButton> = ({ text, type = 'button', onClick, icon, color }) => {
     return (
-        <button className="button" type={type} onClick={onClick}>
+        <button className={`button ${color}`} type={type} onClick={onClick}>
             {text}
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <FontAwesomeIcon icon={icon} />
         </button>
     )
 }

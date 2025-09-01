@@ -4,7 +4,6 @@
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
     padding-block: 1rem;
     padding-inline: 1.25rem;
-    background-color: var(--color-primary);
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -17,6 +16,14 @@
     overflow: hidden;
     font-size: 15px;
     cursor: pointer;
+}
+
+.bg-color-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-color-secondary {
+    background-color: var(--color-secondary);
 }
 
 .icon {

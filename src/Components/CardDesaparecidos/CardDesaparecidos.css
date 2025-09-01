@@ -1,7 +1,44 @@
 .card-desaparecidos {
-    width: 350px;
+    width: 340px;
     background-color: oklch(.98 .02 142);
     box-shadow: 11px 9px 0px 0px rgba(0, 0, 0, 0.18);
     padding: 20px;
     border-radius: 10px;
 }
+
+.card-desaparecidos:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.btn-card button {
+    width: 100%;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    border-radius: 5px;
+}
+
+.span-status {
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+    font-size: 13px;
+    border-radius: 5px;
+    width: 45%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.span-desaparecido {
+    background-color: rgb(216, 5, 5);
+}
+
+.span-encontrato {
+    background-color: green;
+}
+
+.card-desaparecidos img {
+    width: 300px;
+    height: 300px;
+}
+

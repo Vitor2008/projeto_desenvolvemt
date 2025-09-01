@@ -1,16 +1,26 @@
+import { useState } from "react";
+import './Desaparecidos.css'
 import Button from "../Button/Button"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import { faFilter, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons';
 import CardDesaparecidos from "../CardDesaparecidos/CardDesaparecidos";
 
 const Desaparecidos = () => {
 
+  const [showFilters, setShowFilters] = useState(false);
+
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
+
   return (
-    <div className="desaparecidos">
+    <div className="desaparecidos mb-5">
       <div className="max-w-4xl mx-auto space-y-4">
         <div className="flex gap-2">
           <div className="flex items-center justify-center p-5 w-full">
-            <div className="rounded-lg bg-gray-200 p-5 w-full">
+
+            <div className={`rounded-lg bg-gray-200 p-5 w-full ${showFilters ? "expandido" : ""}`}>
+
               <div className="flex">
                 <div className="flex w-10 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white p-5">
                   <svg viewBox="0 0 20 20" aria-hidden="true" className="pointer-events-none absolute w-5 fill-gray-500 transition">
@@ -18,19 +28,57 @@ const Desaparecidos = () => {
                   </svg>
                 </div>
                 <input type="text" className="w-full max-w-[160px] bg-white pl-2 text-base font-semibold outline-0" placeholder="Busque pelo nome..." id="" />
-                <div className="flex gap-4">
-                  <a className="color-btn">Buscar</a>
-                  <a className="color-btn-secundary"><FontAwesomeIcon icon={faFilter} /> Filtros</a>
+                <div className="flex gap-4 btn-card">
+                  <Button text="Buscar" icon={faSearch} color='bg-color-primary' />
+                  <Button text="Filtros" icon={faFilter} color='bg-color-secondary' onClick={toggleFilters} />
                 </div>
               </div>
+
+              {showFilters && (
+                <div className='filtros-avancados mt-4 transition-all duration-300'>
+                  <div className='flex gap-4 items-center flex-wrap'>
+                    <div className='flex flex-col'>
+                      <label className='font-semibold'>Idade Mínima</label>
+                      <input placeholder='Ex: 18' type='number' className='bg-white pl-2 text-base outline-0' />
+                    </div>
+                    <div className='flex flex-col'>
+                      <label className='font-semibold'>Idade Máxima</label>
+                      <input placeholder='Ex: 18' type='number' className='bg-white pl-2 text-base outline-0' />
+                    </div>
+                    <div className='flex flex-col'>
+                      <label className='font-semibold'>Sexo</label>
+                      <select className='bg-white pl-2 text-base outline-0'>
+                        <option value="-1">Selecione o sexo</option>
+                        <option value="desaparecida">Masculino</option>
+                        <option value="localizada">Feminina</option>
+                      </select>
+                    </div>
+                    <div className='flex flex-col'>
+                      <label className='font-semibold'>Status</label>
+                      <select className='bg-white pl-2 text-base outline-0'>
+                        <option value="-1">Selecione o status</option>
+                        <option value="desaparecida">Desaparecida</option>
+                        <option value="localizada">Localizada</option>
+                      </select>
+                    </div>
+                    <Button text="Limpar Filtros" icon={faTrash} color='bg-color-secondary' />
+                  </div>
+                </div>
+              )
+              }
             </div>
+
           </div>
         </div>
       </div>
 
-      <div>
-        <h1 className='text-2xl font-bold text-foreground mb-2'>Pessoas Desaparecidas</h1>
-        <CardDesaparecidos />
+      <div className="mt-4">
+        <h1 className='text-2xl font-bold text-foreground mb-5'>Pessoas Desaparecidas</h1>
+        <div className="container-desaparecidos grid grid-cols-1 md:grid-cols-3">
+          <CardDesaparecidos id='1' img='https://tse3.mm.bing.net/th/id/OIP.AWQeNdG34k2eI5lmqopI0gHaKe?rs=1&pid=ImgDetMain&o=7&rm=3' nome='Teste Um' status='Desaparecida' data='01/01/2001' local='Cuiabá, MT' />
+          <CardDesaparecidos id='2' img='https://tse3.mm.bing.net/th/id/OIP.AWQeNdG34k2eI5lmqopI0gHaKe?rs=1&pid=ImgDetMain&o=7&rm=3' nome='Teste Um' status='Localizada' data='01/01/2001' local='Cuiabá, MT' />
+          <CardDesaparecidos id='3' img='https://tse3.mm.bing.net/th/id/OIP.AWQeNdG34k2eI5lmqopI0gHaKe?rs=1&pid=ImgDetMain&o=7&rm=3' nome='Teste Um' status='Desaparecida' data='01/01/2001' local='Cuiabá, MT' />
+        </div>
       </div>
 
     </div>

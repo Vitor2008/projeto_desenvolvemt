@@ -1,3 +1,27 @@
-.desaparecidos {
-    height: 100vh;
+.container-desaparecidos {
+    justify-items: center;
+    gap: 50px;
+}
+
+.filtros-avancados input,
+.filtros-avancados select {
+    width: 180px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.filtros-avancados button {
+    margin-top: 17px;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    border-radius: 5px;
+}
+
+.desaparecidos .rounded-lg {
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.desaparecidos .rounded-lg.expandido {
+    max-height: 600px;
 }

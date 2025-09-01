@@ -3,7 +3,7 @@ import { Link } from 'react-scroll';
 import './Navbar.css'
 import logo from '../../assets/Img/icon.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faPhone, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faPhone, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Button from '../Button/Button'
 
@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`${sticky ? 'dark-nav' : ''} w-full`}>
+      <nav className={`${sticky ? 'dark-nav fixed-nav' : ''} w-full`}>
         <div className='nav-header bg-color-primary p-2 flex justify-center gap-4 container-nav text-white md:text-base'>
           <span><FontAwesomeIcon icon={faPhone} /> (65) 3336-0000</span>
           <span ><FontAwesomeIcon icon={faClock} /> 7h às 17h</span>
@@ -43,11 +43,11 @@ const Navbar = () => {
             </div>
             <ul className={mobileMenu ? '' : 'hide-mobile-menu flex'}>
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='home' smooth={true} offset={0} duration={500}>Home</Link></li>
-              <li className='flex items-center list-none text-[20px] font-bold'><Link to='services' smooth={true} offset={-360} duration={500}>Sobre</Link></li>
+              <li className='flex items-center list-none text-[20px] font-bold'><Link to='about' smooth={true} offset={-360} duration={500}>Sobre</Link></li>
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='about' smooth={true} offset={-160} duration={500}>Institucional</Link></li>
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='contact' smooth={true} offset={-260} duration={500}>Ouvidoria</Link></li>
-              <li className='flex items-center list-none text-[20px] font-bold'><Link to='contact' smooth={true} offset={-260} duration={500}>
-                <Button text='Buscar Desaparecido'></Button>
+              <li className='flex items-center list-none text-[20px] font-bold'><Link to='desaparecidos' smooth={true} offset={-360} duration={500}>
+                <Button text='Buscar Desaparecido' icon={faSearch} color='bg-color-primary' />
               </Link></li>
             </ul>
             <FontAwesomeIcon icon={faBars} className='menu-icon' onClick={toggleMenu} />
