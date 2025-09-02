@@ -60,7 +60,7 @@ function App() {
           </Route>
 
           <Route element={<DetalhesLayout />}>
-            <Route path="/detalhes/:id" element={<Detalhes />} />
+            <Route path="/Detalhes/:id" element={<Detalhes />} />
           </Route>
 
         </Routes>

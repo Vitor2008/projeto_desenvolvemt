@@ -2,17 +2,20 @@ import config from '../../appsettings.json';
 
 
 export async function buscarDesaparecidos() {
-    try {
-      const resposta = await fetch(`${config.api.buscarDesaparecidos}`);
-      if (!resposta.ok) {
-        throw new Error("Erro ao buscar dados da API");
-      }
-      const dados = await resposta.json();
-      return dados.content; 
-    } catch (erro) {
-      console.error("Erro ao buscar desaparecidos:", erro);
-      return []; 
+  try {
+    const resposta = await fetch(`${config.api.buscarDesaparecidos}`);
+    console.log("api", config.api.buscarDesaparecidos);
+    if (!resposta.ok) {
+      throw new Error("Erro ao buscar dados da API");
     }
+    const dados = await resposta.json();
+    console.log("dados: ", dados);
+    return dados.content;
+  } catch (erro) {
+    console.log("erro: ", erro);
+    console.error("Erro ao buscar desaparecidos:", erro);
+    return [];
+  }
 };
 
 export const buscarDetalheDesaparecido = async (id: number) => {
@@ -21,6 +24,7 @@ export const buscarDetalheDesaparecido = async (id: number) => {
     if (!response.ok) {
       throw new Error("Erro ao buscar detalhes");
     }
+    console.log("response: ", response);
     return await response.json();
   } catch (error) {
     console.error("Erro ao buscar detalhes:", error);
@@ -28,14 +32,14 @@ export const buscarDetalheDesaparecido = async (id: number) => {
   }
 };
 
-export async function buscarDesaparecidosComFiltro(filtros: { 
-  nome?: string; 
-  faixaIdadeInicial?: number; 
-  faixaIdadeFinal?: number; 
-  sexo?: "MASCULINO" | "FEMININO"; 
-  status?: "DESAPARECIDO" | "LOCALIZADO"; 
-  pagina?: number; 
-  porPagina?: number; 
+export async function buscarDesaparecidosComFiltro(filtros: {
+  nome?: string;
+  faixaIdadeInicial?: number;
+  faixaIdadeFinal?: number;
+  sexo?: "MASCULINO" | "FEMININO";
+  status?: "DESAPARECIDO" | "LOCALIZADO";
+  pagina?: number;
+  porPagina?: number;
 }) {
   try {
     const url = new URL(`${config.api.buscarDesaparecidosComFiltro}`);
@@ -53,7 +57,7 @@ export async function buscarDesaparecidosComFiltro(filtros: {
     }
 
     const dados = await resposta.json();
-    return dados.content; 
+    return dados.content;
   } catch (erro) {
     console.error("Erro ao buscar desaparecidos com filtros:", erro);
     return [];
@@ -65,7 +69,7 @@ export const enviarInformacoes = async (dados: {
   data: string;
   ocoId: number;
   id: number;
-  anexos?: File[]; 
+  anexos?: File[];
 }) => {
   try {
     const { anexos } = dados;
@@ -78,7 +82,7 @@ export const enviarInformacoes = async (dados: {
 
     if (anexos && anexos.length > 0) {
       anexos.forEach((anexo, index) => {
-        formData.append(`anexos[${index}]`, anexo); 
+        formData.append(`anexos[${index}]`, anexo);
       });
     }
 
