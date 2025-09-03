@@ -206,7 +206,7 @@ const Desaparecidos = () => {
         <h1 className='text-2xl font-bold text-foreground mb-5'>Pessoas Desaparecidas</h1>
         {desaparecidosPaginados.length < 1 ?
           <p className="mt-5 text-center text-lg font-bold text-red-500">Nenhuma informação encontrada!</p> :
-          <div className="container-desaparecidos grid grid-cols-1 md:grid-cols-3">
+          <div className="container-desaparecidos grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {desaparecidosPaginados.map((desaparecido) => (
               <div
                 key={desaparecido.id}

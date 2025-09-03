@@ -5,3 +5,15 @@
 .about .grid{
     justify-items: center;
 }
+
+@media (max-width: 1024px) {
+    .about{
+        min-height: 60vh;
+    }
+}
+
+@media (max-width: 748px) {
+    .about{
+        min-height: 80vh;
+    }
+}

@@ -10,7 +10,7 @@ const Footer = () => {
                         Este portal foi criado para auxiliar na busca e localização de pessoas desaparecidas. Trabalhamos em
                         parceria com autoridades competentes e organizações de apoio às famílias.
                     </p>
-                    <div className="flex sm:flex-row justify-center items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex sm:flex-row justify-center items-center gap-2 md:gap-4 lg:gap-4 text-sm text-muted-foreground">
                         <span>© 2025 Portal de Pessoas Desaparecidas</span>
                         <span className="sm:inline">•</span>
                         <span>Todos os direitos reservados</span>

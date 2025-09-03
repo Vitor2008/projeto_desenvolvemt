@@ -39,3 +39,10 @@ a {
   background: #105169;
   background: linear-gradient(90deg, rgba(16, 81, 105, 1) 0%, rgba(18, 90, 110, 1) 16%, rgba(4, 180, 234, 1) 100%);
 }
+
+@media (max-width: 1024px) {
+  .site-container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
