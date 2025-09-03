@@ -18,6 +18,10 @@
   background-color: var(--color-primary);
 }
 
+.bg-color-secondary {
+  background-color: var(--color-secondary);
+}
+
 .color-primary {
   color: var(--color-primary);
 }
@@ -44,7 +48,7 @@ a {
   background: linear-gradient(90deg, rgba(16, 81, 105, 1) 0%, rgba(18, 90, 110, 1) 16%, rgba(4, 180, 234, 1) 100%);
 }
 
-.text-error{
+.text-error {
   color: red;
 }
 

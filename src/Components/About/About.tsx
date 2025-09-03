@@ -7,7 +7,7 @@ const About = () => {
         <section className="about bg-muted/30 border-b border-border">
             <div className="container mx-auto px-4 py-12">
                 <div className="max-w-4xl mx-auto text-center">
-                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-6 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:grid-cols-3 mt-8">
                         <Card
                             title="Busca Eficiente"
                             text="Sistema de busca avançado com filtros por idade, localização e outras características."

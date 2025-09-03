@@ -26,7 +26,7 @@ const Desaparecidos = () => {
 
   const [desaparecidos, setDesaparecidos] = useState<DadosDesaparecidos[]>([]);
   const [paginaAtual, setPaginaAtual] = useState(1);
-  const [itensPorPagina] = useState(10); // Parametriza a quantidades de cards por página
+  const [itensPorPagina] = useState(10);
   const navigate = useNavigate();
   const [erro, setErro] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -95,7 +95,7 @@ const Desaparecidos = () => {
         throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
       }
       else {
-        navigate(`/Detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
+        navigate(`/detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
       }
     } catch (error) {
       console.error("error", error);
@@ -271,6 +271,20 @@ const Desaparecidos = () => {
             ))}
           </div>
         )}
+
+        {/* TESTE CARD */}
+        {/* <div
+          key={2}
+          onClick={() => handleDetalhesClick(2)}>
+          <CardDesaparecidos
+            id={2}
+            img={'https://tse3.mm.bing.net/th/id/OIP.W3jTWclxgQXMkZCMyldX1wHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'}
+            nome={'Nome Desaparecido'}
+            status={"Desaparecida"}
+            idade={20}
+            data='01/01/2001'
+            local={'Cuiabá, MT'} />
+        </div> */}
       </div>
 
     </div>

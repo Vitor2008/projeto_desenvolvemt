@@ -2,7 +2,7 @@ import './Footer.css'
 
 const Footer = () => {
     return (
-        <footer className="border-t border-border mt-12 color-white">
+        <footer className="border-t border-border mt-12 text-white">
             <div className="container mx-auto px-4 py-8">
                 <div className="text-center space-y-4">
                     <h3 className="font-bold text-2xl">Portal de Pessoas Desaparecidas</h3>

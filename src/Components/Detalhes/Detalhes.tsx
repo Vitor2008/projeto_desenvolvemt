@@ -1,7 +1,7 @@
 import './Detalhes.css'
 import Button from "../Button/Button"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowUpFromBracket, faDownload, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faArrowUpFromBracket, faDownload, faCircleExclamation, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useLocation } from "react-router-dom";
 import { formatarData } from "../../Helper/FormatarData";
@@ -18,36 +18,34 @@ const Detalhes = () => {
     const filtros = location.state || {};
     const detalhes = location.state?.detalhes;
 
-    if (!detalhes) {
-        return <div className="p-4 text-red-500">Nenhuma informação encontrada!</div>;
-    }
-
     const dtDesaparecimento = formatarData(detalhes.ultimaOcorrencia.dtDesaparecimento);
     const dtLocalizacao = formatarData(detalhes.ultimaOcorrencia.dataLocalizacao);
+    // const dtDesaparecimento = '';
+    // const dtLocalizacao = '';
     const hoje = new Date().toISOString().split('T')[0];
 
     const abrirModal = () => {
         const modalContent = document.createElement("div");
         modalContent.innerHTML = `
-        <div class="grid grid-cols-1 gap-4 text-left">
+        <div class="modal grid grid-cols-1 gap-4 text-left">
             <div>
-            <label class="block font-medium text-gray-700"><strong>Informações:*</strong></label>
-            <textarea id="campoInfo" class="swal2-textarea border rounded-md p-1 m-0" placeholder="Digite as informações aqui..."></textarea>
-            <p id="erroInfo" class="text-red-500 text-sm hidden">Campo obrigatório!</p>
+                <label class="block font-medium text-gray-700"><strong>Informações:*</strong></label>
+                <textarea id="campoInfo" class="swal2-textarea border rounded-md p-1 m-0 w-full" placeholder="Digite as informações aqui..."></textarea>
+                <p id="erroInfo" class="text-error text-sm hidden">Campo obrigatório!</p>
             </div>
-            <div class="grid grid-cols-2">
-            <div>
-                <label class="block font-medium text-gray-700">Data informação:*</label>
-                <input type="date" id="campoData" class="swal2-input w-full border rounded-md p-2 m-0 cursor-pointer" max=${hoje}>
-                <p id="erroData" class="text-red-500 text-sm hidden">Campo obrigatório!</p>
-            </div>
-            <div>
-                <label class="block font-medium text-gray-700">Enviar foto:</label>
-                <input type="file" id="campoFoto" accept="image/png, image/jpeg, image/jpg" class="border rounded-md p-2 w-full cursor-pointer">
-                <div id="previewContainer" class="mt-2 hidden">
-                <img id="previewImage" class="max-w-full h-auto rounded-md shadow-md"/>
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="info mb-5 md:mb-0">
+                    <label class="block font-medium text-gray-700">Data informação:*</label>
+                    <input type="date" id="campoData" class="swal2-input w-full border rounded-md p-2 m-0 cursor-pointer" max=${hoje}>
+                    <p id="erroData" class="text-error text-sm hidden">Campo obrigatório!</p>
                 </div>
-            </div>
+                <div class="info">
+                    <label class="block font-medium text-gray-700">Enviar foto:</label>
+                    <input type="file" id="campoFoto" accept="image/png, image/jpeg, image/jpg" class="border rounded-md p-2 w-full cursor-pointer">
+                    <div id="previewContainer" class="mt-2 hidden">
+                    <img id="previewImage" class="max-w-full h-auto rounded-md shadow-md"/>
+                    </div>
+                </div>
             </div>
         </div>
         `;
@@ -55,10 +53,12 @@ const Detalhes = () => {
         Swal.fire({
             title: "Enviar informações:",
             showCancelButton: true,
-            confirmButtonColor: "oklch(0.546 0.245 262.881)",
-            cancelButtonColor: "#d33",
             confirmButtonText: "Enviar",
             cancelButtonText: "Cancelar",
+            customClass: {
+                confirmButton: 'bg-color-primary',
+                cancelButton: 'bg-color-secondary'
+            },
             html: modalContent,
             preConfirm: async () => {
                 const info = document.getElementById("campoInfo") as HTMLTextAreaElement;
@@ -122,6 +122,107 @@ const Detalhes = () => {
             }
         });
     };
+
+    if (!detalhes) {
+        return (
+            <div className="p-4 detalhes">
+                <Link to="/" state={filtros} className='btn-voltar'>
+                    <Button text="Voltar" icon={faArrowLeft} color='bg-color-secondary' />
+                </Link>
+                <div className="h-1 bg-color-primary  w-[80vw] lg:mx-40 mx-9 rounded-full  justify-center items-center mt-4 hidden lg:flex">
+                    <div className="bg-color-primary rounded-full w-fit text-white p-2 px-8 font-bold text-xl">
+                        Detalhes da Pessoa
+                    </div>
+                </div>
+                <div className='mt-4 pt-4'>
+                    <p className="flex items-center md:justify-center gap-1 text-lg font-bold">
+                        <FontAwesomeIcon className="text-error" icon={faTriangleExclamation} />
+                        Ocorreu um erro ao buscar os detalhes do desaparecido. Tente novamente mais tarde.
+                    </p>
+                </div>
+            </div>
+        )
+
+        // return <div className="detalhes p-5">
+        //     <Link to="/" state={filtros} className='btn-voltar'>
+        //         <Button text="Voltar" icon={faArrowLeft} color='bg-color-secondary' />
+        //     </Link>
+
+        //     <div className="h-1 bg-color-primary  w-[80vw] lg:mx-40 mx-9 rounded-full  justify-center items-center mt-4 hidden lg:flex">
+        //         <div className="bg-color-primary rounded-full w-fit text-white p-2 px-8 font-bold text-xl">
+        //             Detalhes da Pessoa
+        //         </div>
+        //     </div>
+
+        //     <div className='info flex flex-col md:flex-row items-center justify-between p-4 mt-4'>
+
+        //         <div className='container-info'>
+        //             <div className='header-detalhes'>
+        //                 <h1 className="text-2xl font-bold mb-1">Teste</h1>
+        //                 <h1 className="font-semibold uppercase mt-4 mb-2"><strong>Última Ocorrência: </strong></h1>
+        //             </div>
+        //             <div className='body-detalhes grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-4'>
+        //                 <div className='col-detalhes'>
+        //                     <label className="block"><strong>Status:</strong></label>
+        //                     <span className={`span-status span-desaparecido`}><FontAwesomeIcon icon={faCircleExclamation} className='mr-1' /> {"Desaparecida"}</span>
+        //                 </div>
+        //                 <div className='col-detalhes'>
+        //                     <label className="block"><strong>Idade:</strong></label>
+        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={20 + ' anos'} disabled />
+        //                 </div>
+        //                 <div className='col-detalhes'>
+        //                     <label className="block"><strong>Sexo:</strong></label>
+        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={'Masculina'} disabled />
+        //                 </div>
+        //                 <div className='col-detalhes'>
+        //                     <label className="block"><strong>Data desaparecimento:</strong></label>
+        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={'24/08/2001'} disabled />
+        //                 </div>
+        //                 <div className='col-detalhes'>
+        //                     <label className="block"><strong>Local desaparecimento:</strong></label>
+        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={''} disabled />
+        //                 </div>
+        //                 <div className="col-detalhes">
+        //                     <label className="block"><strong>Vestimentas desaparecido:</strong></label>
+        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Não informado"} disabled />
+        //                 </div>
+        //                 <div className="col-detalhes">
+        //                     <label className="block"><strong>Últimas informações:</strong></label>
+        //                     <textarea className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Sem informações"} disabled />
+        //                 </div>
+        //                 <div className='col-detalhes flex items-center mt-4'>
+        //                     <Button text="Enviar Informações" icon={faArrowUpFromBracket} onClick={abrirModal} color='bg-color-primary' />
+        //                 </div>
+        //                 <>
+        //                     <div className='col-detalhes'>
+        //                         <label className="block"><strong>Data localização:</strong></label>
+        //                         <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300 font-semibold uppercase" value={'20/01/2026'} disabled />
+        //                     </div>
+        //                     <div className='col-detalhes'>
+        //                         <label className="block"><strong>Encontrada vivo:</strong></label>
+        //                         <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Sim"} disabled />
+        //                     </div>
+        //                 </>
+        //                 <div className='col-detalhes cartaz'>
+        //                     <Button text="Ver Cartaz" icon={faDownload} typeBtn='ahref' href={''} color='bg-color-secondary' />
+        //                 </div>
+        //             </div>
+        //             <div className='footer-detalhes'>
+
+        //             </div>
+        //         </div>
+
+        //         <div className='img-detalhe'>
+        //             <FotoPessoa
+        //                 url={''}
+        //                 alt={''}
+        //                 className="object-cover rounded-md mb-4"
+        //             />
+        //         </div>
+        //     </div>
+        // </div>
+        //     ;
+    }
 
     return (
         <div className="detalhes p-5">

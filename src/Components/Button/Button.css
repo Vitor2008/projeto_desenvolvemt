@@ -18,14 +18,6 @@
     cursor: pointer;
 }
 
-.bg-color-primary {
-    background-color: var(--color-primary);
-}
-
-.bg-color-secondary {
-    background-color: var(--color-secondary);
-}
-
 .icon {
     width: 24px;
     height: 24px;
@@ -76,7 +68,7 @@
 @media (max-width: 840px) {
     .button {
         font-size: 13px;
-        padding-block: 0.5rem;
+        padding-block: 1rem;
         padding-inline: 1rem;
     }
 }
