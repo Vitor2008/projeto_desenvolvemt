@@ -6,7 +6,7 @@ import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { useLocation } from "react-router-dom";
 import { formatarData } from "../../Helper/FormatarData";
 import FotoPessoa from '../../Helper/FotoPessoa';
-import { enviarInformacoes } from "../../Services/DesaparecidosServices";
+import { DesaparecidosController } from "../../Controllers/DesaparecidosController"
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import type { SweetAlertResult } from "sweetalert2"
@@ -98,7 +98,7 @@ const Detalhes = () => {
                     anexos: anexos,
                 };
 
-                const result = await enviarInformacoes(dados);
+                const result = await DesaparecidosController.enviarInformacoes(dados);
 
                 if (!result || result.erro) {
                     Swal.fire({

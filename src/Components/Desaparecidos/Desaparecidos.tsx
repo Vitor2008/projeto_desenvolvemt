@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"
-import { buscarDesaparecidos, buscarDetalheDesaparecido, buscarDesaparecidosComFiltro } from "../../Services/DesaparecidosServices"
+import { DesaparecidosController } from "../../Controllers/DesaparecidosController"
 import './Desaparecidos.css'
 import Button from "../Button/Button"
-import Loader from "../Loader/Loader"
-import { faFilter, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
+import LoaderSecondary from "../LoaderSecondary/LoaderSecondary"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter, faSearch, faTrash, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import CardDesaparecidos from "../CardDesaparecidos/CardDesaparecidos"
 
 interface DadosDesaparecidos {
@@ -27,6 +28,8 @@ const Desaparecidos = () => {
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [itensPorPagina] = useState(10); // Parametriza a quantidades de cards por página
   const navigate = useNavigate();
+  const [erro, setErro] = useState<string | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const location = useLocation();
 
@@ -36,11 +39,20 @@ const Desaparecidos = () => {
   const [sexo, setSexo] = useState(location.state?.sexo || "");
   const [status, setStatus] = useState(location.state?.status || "");
 
-
   useEffect(() => {
     const obterDesaparecidos = async () => {
-      const dados = await buscarDesaparecidos();
-      setDesaparecidos(dados);
+      setLoading(true)
+      setErro(null)
+      try {
+        const dados = await DesaparecidosController.listarTodos();
+        if (!dados.ok) throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
+        setDesaparecidos(dados);
+      } catch (error) {
+        console.error("error:", error);
+        setErro("Falha ao buscar as informações. Tente novamente mais tarde.")
+      } finally {
+        setLoading(false)
+      }
     };
 
     obterDesaparecidos();
@@ -52,6 +64,8 @@ const Desaparecidos = () => {
   }, [location.state]);
 
   const handlePesquisar = async () => {
+    setLoading(true)
+    setErro(null)
     try {
       const filtros = {
         nome: nome,
@@ -60,23 +74,35 @@ const Desaparecidos = () => {
         sexo: sexo as "MASCULINO" | "FEMININO" | undefined,
         status: status as "DESAPARECIDO" | "LOCALIZADO" | undefined,
       };
-
-      const dadosFiltrados = await buscarDesaparecidosComFiltro(filtros);
+      const dadosFiltrados = await DesaparecidosController.listarComFiltro(filtros);
+      if (!dadosFiltrados.ok) throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
       setDesaparecidos(dadosFiltrados);
       setPaginaAtual(1);
     } catch (error) {
-      console.error("Erro ao buscar desaparecidos com filtro:", error);
+      console.error("error:", error);
+      setErro("Falha ao buscar as informações. Tente novamente mais tarde.")
+    } finally {
+      setLoading(false)
     }
   };
 
   const handleDetalhesClick = async (id: number) => {
+    setLoading(true)
+    setErro(null)
     try {
-      const detalhes = await buscarDetalheDesaparecido(id);
-      navigate(`/Detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
+      const detalhes = await DesaparecidosController.obterDetalhes(id);
+      if (!detalhes.ok) {
+        throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
+      }
+      else {
+        navigate(`/Detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
+      }
     } catch (error) {
-      console.error("Erro ao buscar detalhes:", error);
+      console.error("error", error);
+      setErro("Falha ao buscar as informações. Tente novamente mais tarde.")
+    } finally {
+      setLoading(false)
     }
-
   };
 
   const indiceUltimoItem = paginaAtual * itensPorPagina;
@@ -103,7 +129,7 @@ const Desaparecidos = () => {
     <div className="desaparecidos mb-5">
       <div className="max-w-4xl mx-auto space-y-4">
         <div className="flex gap-2">
-          <div className="flex items-center justify-center p-5 w-full">
+          <div className="flex items-center justify-center w-full p-5 container-filtros">
 
             <div className={`rounded-lg bg-gray-200 p-5 w-full ${showFilters ? "expandido" : ""}`}>
 
@@ -124,13 +150,15 @@ const Desaparecidos = () => {
                     onChange={(e) => setNome(e.target.value)}
                   />
                   <div className="flex gap-4 btn-card">
-                    <Button
-                      text="Buscar"
-                      type='button'
-                      onClick={handlePesquisar}
-                      icon={faSearch}
-                      color='bg-color-primary'
-                    />
+                    <div className="no-mobile">
+                      <Button
+                        text="Buscar"
+                        type='button'
+                        onClick={handlePesquisar}
+                        icon={faSearch}
+                        color='bg-color-primary'
+                      />
+                    </div>
                     <Button text="Filtros" icon={faFilter} color='bg-color-secondary' onClick={toggleFilters} />
                   </div>
                 </div>
@@ -170,7 +198,7 @@ const Desaparecidos = () => {
                           value={sexo}
                           onChange={(e) => setSexo(e.target.value)}
                         >
-                          <option value="">Selecione o sexo</option>
+                          <option className="classe" value="">Selecione o sexo</option>
                           <option value="MASCULINO">Masculino</option>
                           <option value="FEMININO">Feminino</option>
                         </select>
@@ -189,6 +217,15 @@ const Desaparecidos = () => {
                           <option value="LOCALIZADO">Localizada</option>
                         </select>
                       </div>
+                      <div className="no-desktop">
+                        <Button
+                          text="Buscar"
+                          type='button'
+                          onClick={handlePesquisar}
+                          icon={faSearch}
+                          color='bg-color-primary'
+                        />
+                      </div>
                       <Button onClick={reset} text="Limpar Filtros" icon={faTrash} color='bg-color-secondary' />
                     </div>
                   </div>
@@ -204,8 +241,19 @@ const Desaparecidos = () => {
 
       <div className="mt-4">
         <h1 className='text-2xl font-bold text-foreground mb-5'>Pessoas Desaparecidas</h1>
-        {desaparecidosPaginados.length < 1 ?
-          <p className="mt-5 text-center text-lg font-bold text-red-500">Nenhuma informação encontrada!</p> :
+        {loading ? (
+          <LoaderSecondary />
+        ) : erro ? (
+          <p className="flex items-center md:justify-center gap-1 text-lg font-bold">
+            <FontAwesomeIcon className="text-error" icon={faTriangleExclamation} />
+            {erro}
+          </p>
+        ) : desaparecidosPaginados.length < 1 ? (
+          <p className="flex items-center md:justify-center gap-1 text-lg font-bold">
+            <FontAwesomeIcon className="color-primary" icon={faTriangleExclamation} />
+            Nenhuma informação encontrada!
+          </p>
+        ) : (
           <div className="container-desaparecidos grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {desaparecidosPaginados.map((desaparecido) => (
               <div
@@ -222,7 +270,7 @@ const Desaparecidos = () => {
               </div>
             ))}
           </div>
-        }
+        )}
       </div>
 
     </div>

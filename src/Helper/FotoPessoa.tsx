@@ -1,5 +1,5 @@
 import React from 'react';
-import imgDefault from '../assets/Img/img default.png' 
+import imgDefault from '../assets/Img/img default.png'
 
 interface FotoPessoaProps {
   url?: string | null;
@@ -21,6 +21,7 @@ const FotoPessoa: React.FC<FotoPessoaProps> = ({ url, alt = 'Imagem', className 
       onError={handleError}
       alt={alt}
       className={className}
+      loading='lazy'
     />
   );
 };

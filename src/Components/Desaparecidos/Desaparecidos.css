@@ -25,3 +25,26 @@
 .desaparecidos .rounded-lg.expandido {
     max-height: 600px;
 }
+
+
+
+@media (max-width: 768px) {
+
+    .container-filtros{
+        padding: 0;
+    }
+    
+    .filtros-avancados .flex-col,
+    .filtros-avancados .flex-col label,
+    .filtros-avancados .flex-col input,
+    .filtros-avancados .flex-col select {
+        width: 100%;
+    }
+
+    .filtros-avancados .flex-col select option{
+        width: 20px;
+        font-size: 12px;
+    }
+
+}
+

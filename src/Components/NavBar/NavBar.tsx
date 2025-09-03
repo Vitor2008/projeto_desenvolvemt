@@ -32,7 +32,9 @@ const Navbar = () => {
           <span ><FontAwesomeIcon icon={faClock} /> 7h às 17h</span>
           <span><FontAwesomeIcon icon={faInstagram} /> PortalDesaparecidosOficial</span>
         </div>
+        
         <div className='nav-body bg-white'>
+
           <div className='container-nav py-2 flex justify-between items-center'>
             <div className='container-logo'>
               <div className='flex items-center justify-center gap-1'>

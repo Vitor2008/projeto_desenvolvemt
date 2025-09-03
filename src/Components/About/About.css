@@ -17,3 +17,10 @@
         min-height: 80vh;
     }
 }
+
+@media (max-width: 400px) {
+    .about{
+        min-height: 100vh;
+    }
+}
+

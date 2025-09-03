@@ -75,7 +75,6 @@
 
 @media (max-width: 840px) {
     .button {
-        background-color: var(--color-secondary);
         font-size: 13px;
         padding-block: 0.5rem;
         padding-inline: 1rem;
