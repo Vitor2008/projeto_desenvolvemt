@@ -3,7 +3,7 @@ Portal de Pessoas Desaparecidas
 
 ## Dados candidato:
 - Nome: Vitor Gabriel Oliveira de Almeida
-- E-mail: vial.almeida@icloud.com
+- E-mail: vial.almeida@icloud.com / gabrielronaldo9343@gmail.com
 - Telefone para contato: (65) 98479-4759
 
 # Descrição do Projeto
