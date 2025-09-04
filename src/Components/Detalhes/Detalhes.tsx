@@ -41,10 +41,6 @@ const Detalhes = () => {
 
     const dtDesaparecimento = detalhes.ultimaOcorrencia.dtDesaparecimento === null ? '' : formatarData(detalhes.ultimaOcorrencia.dtDesaparecimento);
     const dtLocalizacao = detalhes.ultimaOcorrencia.dataLocalizacao === null ? '' : formatarData(detalhes.ultimaOcorrencia.dataLocalizacao);
-
-    // const dtDesaparecimento = '';
-    // const dtLocalizacao = '';
-
     const hoje = new Date().toISOString().split('T')[0];
 
     const abrirModal = () => {
@@ -129,6 +125,9 @@ const Detalhes = () => {
                         text: result?.message || "Ocorreu um erro desconhecido.",
                         icon: "error",
                         confirmButtonText: "Ok",
+                        customClass: {
+                            confirmButton: 'bg-color-secondary'
+                        }
                     });
                     return false;
                 }
@@ -140,7 +139,10 @@ const Detalhes = () => {
                 Swal.fire({
                     title: "Informações Enviadas!",
                     confirmButtonColor: "oklch(0.546 0.245 262.881)",
-                    icon: "success"
+                    icon: "success",
+                    customClass: {
+                        confirmButton: 'bg-color-primary'
+                    }
                 });
             }
         });

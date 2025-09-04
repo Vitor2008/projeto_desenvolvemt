@@ -26,14 +26,18 @@
     max-height: 600px;
 }
 
-
+@media ((min-width: 748px) and (max-width: 1024px)) {
+    .container-desaparecidos.grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+}
 
 @media (max-width: 768px) {
 
-    .container-filtros{
+    .container-filtros {
         padding: 0;
     }
-    
+
     .filtros-avancados .flex-col,
     .filtros-avancados .flex-col label,
     .filtros-avancados .flex-col input,
@@ -41,10 +45,9 @@
         width: 100%;
     }
 
-    .filtros-avancados .flex-col select option{
+    .filtros-avancados .flex-col select option {
         width: 20px;
         font-size: 12px;
     }
 
 }
-

@@ -120,7 +120,6 @@ export const enviarInformacoes = async (dados: {
         message: `Erro ao enviar informações para API ${errorText}`
       };
     }
-
     return {
       status: 'success',
       data: await response.json()

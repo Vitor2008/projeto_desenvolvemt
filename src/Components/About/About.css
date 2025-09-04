@@ -6,9 +6,13 @@
     justify-items: center;
 }
 
-@media (max-width: 1024px) {
+@media ((min-width: 748px) and (max-width: 1024px)) {
     .about {
         min-height: 60vh;
+    }
+
+    .about .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
     }
 }
 

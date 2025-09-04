@@ -12,12 +12,13 @@ interface DadosDesaparecidos {
   id: number;
   nome: string;
   idade: number;
+  sexo: string;
   urlFoto: string;
   vivo: boolean;
   ultimaOcorrencia: {
-    localDesaparecimentoConcat: string;
-    dataDesaparecimento: string,
-    dataLocalizacao: string
+    dataLocalizacao: string;
+    dtDesaparecimento: string;
+    localDesaparecimentoConcat: string
   };
 }
 
@@ -45,7 +46,7 @@ const Desaparecidos = () => {
       setErro(null)
       try {
         const dados = await DesaparecidosController.listarTodos();
-        if (dados.status == 'error') throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
+        if (dados.status == 'error') throw new Error("Erro ao buscar dados. Tente novamente mais tarde.");
         setDesaparecidos(dados.data);
       } catch (error) {
         console.log("error:", error);
@@ -110,7 +111,7 @@ const Desaparecidos = () => {
   const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
   const desaparecidosPaginados = desaparecidos.slice(indicePrimeiroItem, indiceUltimoItem);
 
-  //const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
+  const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
 
   const [showFilters, setShowFilters] = useState(false);
 
@@ -259,33 +260,55 @@ const Desaparecidos = () => {
             {desaparecidosPaginados.map((desaparecido) => (
               <div
                 key={desaparecido.id}
-                onClick={() => handleDetalhesClick(desaparecido.id)}>
+                onClick={() => handleDetalhesClick(desaparecido.id)}
+              >
                 <CardDesaparecidos
                   id={desaparecido.id}
                   img={desaparecido.urlFoto}
                   nome={desaparecido.nome}
                   status={desaparecido.ultimaOcorrencia.dataLocalizacao === null ? "Desaparecida" : "Localizada"}
                   idade={desaparecido.idade}
-                  data='01/01/2001'
+                  sexo={desaparecido.sexo}
+                  dtDesaparecimento={desaparecido.ultimaOcorrencia.dtDesaparecimento}
                   local={desaparecido.ultimaOcorrencia.localDesaparecimentoConcat} />
               </div>
             ))}
           </div>
         )}
 
-        {/* TESTE CARD */}
-        {/* <div
-          key={2}
-          onClick={() => handleDetalhesClick(2)}>
-          <CardDesaparecidos
-            id={2}
-            img={'https://tse3.mm.bing.net/th/id/OIP.W3jTWclxgQXMkZCMyldX1wHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'}
-            nome={'Nome Desaparecido'}
-            status={"Desaparecida"}
-            idade={20}
-            data='01/01/2001'
-            local={'Cuiabá, MT'} />
-        </div> */}
+        <p className="text-lg font-bold mt-6 text-azul-4">
+          Total encontrados: <span className="color-primary">{desaparecidos.length}</span>
+        </p>
+
+        {/* Paginação */}
+        <div className="flex items-center mt-6 space-x-2">
+          <button
+            className={`px-4 py-2 rounded-l-md transition cursor-pointer ${paginaAtual === 1
+              ? "bg-color-primary text-white cursor-not-allowed"
+              : "bg-color-primary text-white"
+              }`}
+            disabled={paginaAtual === 1}
+            onClick={() => setPaginaAtual(paginaAtual - 1)}
+          >
+            Anterior
+          </button>
+
+          <span className="px-4 py-2 text-sm font-semibold">
+            Página {paginaAtual} de {totalPaginas}
+          </span>
+
+          <button
+            className={`px-4 py-2 rounded-r-md transition cursor-pointer ${paginaAtual >= totalPaginas || desaparecidos.length <= itensPorPagina
+              ? "bg-color-primary text-white cursor-not-allowed"
+              : "bg-color-primary text-white hover:bg-blue-700"
+              }`}
+            disabled={paginaAtual >= totalPaginas || desaparecidos.length <= itensPorPagina}
+            onClick={() => setPaginaAtual(paginaAtual + 1)}
+          >
+            Próxima
+          </button>
+        </div>
+
       </div>
 
     </div>
