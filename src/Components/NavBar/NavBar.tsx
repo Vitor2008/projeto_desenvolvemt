@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-scroll';
-import './Navbar.css'
+import './NavBar.css'
 import logo from '../../assets/Img/icon.jpeg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPhone, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +32,7 @@ const Navbar = () => {
           <span ><FontAwesomeIcon icon={faClock} /> 7h às 17h</span>
           <span><FontAwesomeIcon icon={faInstagram} /> PortalDesaparecidosOficial</span>
         </div>
-        
+
         <div className='nav-body bg-white'>
 
           <div className='container-nav py-2 flex justify-between items-center'>

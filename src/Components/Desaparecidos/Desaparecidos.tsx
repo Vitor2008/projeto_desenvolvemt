@@ -109,7 +109,7 @@ const Desaparecidos = () => {
   const indicePrimeiroItem = indiceUltimoItem - itensPorPagina;
   const desaparecidosPaginados = desaparecidos.slice(indicePrimeiroItem, indiceUltimoItem);
 
-  const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
+  //const totalPaginas = Math.ceil(desaparecidos.length / itensPorPagina);
 
   const [showFilters, setShowFilters] = useState(false);
 
