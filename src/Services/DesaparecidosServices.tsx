@@ -3,18 +3,23 @@ import config from '../../appsettings.json';
 
 export async function buscarDesaparecidos() {
   try {
-    const resposta = await fetch(`${config.api.buscarDesaparecidos}`);
-    console.log("api", config.api.buscarDesaparecidos);
-    if (!resposta.ok) {
-      throw new Error("Erro ao buscar dados da API");
+    const response = await fetch(`${config.api.buscarDesaparecidos}`);
+    if (!response.ok) {
+      return {
+        status: 'error',
+        message: 'Erro ao buscar dados da API'
+      };
     }
-    const dados = await resposta.json();
-    console.log("dados: ", dados);
-    return dados.content;
-  } catch (erro) {
-    console.log("erro: ", erro);
-    console.error("Erro ao buscar desaparecidos:", erro);
-    return [];
+    const dados = await response.json();
+    return {
+      status: 'success',
+      data: dados.content
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: `Erro ao buscar desaparecidos: ${error}`
+    };
   }
 };
 
@@ -22,13 +27,21 @@ export const buscarDetalheDesaparecido = async (id: number) => {
   try {
     const response = await fetch(`${config.api.buscarDetalheDesaparecido}/${id}`);
     if (!response.ok) {
-      throw new Error("Erro ao buscar detalhes");
+      return {
+        status: 'error',
+        message: 'Erro ao buscar detalhes'
+      };
     }
-    console.log("response: ", response);
-    return await response.json();
+    const dados = await response.json();
+    return {
+      status: 'success',
+      data: dados
+    };
   } catch (error) {
-    console.error("Erro ao buscar detalhes:", error);
-    throw error;
+    return {
+      status: 'error',
+      message: `Erro ao buscar detalhes: ${error}`
+    };
   }
 };
 
@@ -50,17 +63,24 @@ export async function buscarDesaparecidosComFiltro(filtros: {
       }
     });
 
-    const resposta = await fetch(url.toString());
+    const response = await fetch(url.toString());
 
-    if (!resposta.ok) {
-      throw new Error("Erro ao buscar dados da API");
+    if (!response.ok) {
+      return {
+        status: 'error',
+        message: `Erro ao buscar dados da API`
+      };
     }
-
-    const dados = await resposta.json();
-    return dados.content;
-  } catch (erro) {
-    console.error("Erro ao buscar desaparecidos com filtros:", erro);
-    return [];
+    const dados = await response.json();
+    return {
+      status: 'success',
+      data: dados.content
+    };
+  } catch (error) {
+    return {
+      status: 'error',
+      message: `Erro ao buscar desaparecidos com filtros: ${error}`
+    };
   }
 };
 
@@ -95,13 +115,21 @@ export const enviarInformacoes = async (dados: {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Erro ao enviar informações: ${errorText}`);
+      return {
+        status: 'error',
+        message: `Erro ao enviar informações para API ${errorText}`
+      };
     }
 
-    return await response.json();
+    return {
+      status: 'success',
+      data: await response.json()
+    };
   } catch (error) {
-    console.error("Erro ao enviar informações do desaparecido:", error);
-    return null;
+    return {
+      status: 'error',
+      message: `Erro ao enviar informações do desaparecido: ${error}`
+    };
   }
 };
 

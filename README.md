@@ -59,8 +59,35 @@ A divisão das responsabilidades está organizada da seguinte maneira:
 - Ter o **Node.js** instalado ([Download](https://nodejs.org/))
 - Ter o **npm** ou **yarn** instalado
 - Ter o **Git** instalado ([Download](https://git-scm.com/))
+- Ter **Docker Desktop** - [Docker Desktop](https://www.docker.com/) instalado e em execução.
 
 ### **Passo a passo:**
+
+## **Rodando com Docker Compose:**
+```bash
+# Clone este repositório
+$ git clone https://github.com/Vitor2008/projeto_desenvolvemt.git
+
+# Acesse a pasta do projeto
+$ cd projeto_desenvolvemt
+
+#Build da imagem na raiz do projeto (onde está o arquivo `Dockerfile`):
+$ docker-compose up -d
+
+# Acesse no navegador:
+http://localhost:3000
+
+```
+
+### **Parar e remover container**
+```bash
+$ docker-compose down
+
+```
+
+
+
+## **Rodando em desenvolvimento (Terminal):**
 ```bash
 # Clone este repositório
 $ git clone https://github.com/Vitor2008/projeto_desenvolvemt.git
@@ -73,9 +100,10 @@ $ npm install  # ou yarn install
 
 # Inicie o servidor de desenvolvimento
 $ npm run dev  # ou yarn dev
-```
 
-O projeto estará rodando no endereço: `http://localhost:5173/`
+# Acesse no navegador:
+http://localhost:5173/
+```
 
 # :star: Contribuidores
 <table>

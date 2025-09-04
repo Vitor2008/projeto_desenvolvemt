@@ -45,10 +45,10 @@ const Desaparecidos = () => {
       setErro(null)
       try {
         const dados = await DesaparecidosController.listarTodos();
-        if (!dados.ok) throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
-        setDesaparecidos(dados);
+        if (dados.status == 'error') throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
+        setDesaparecidos(dados.data);
       } catch (error) {
-        console.error("error:", error);
+        console.log("error:", error);
         setErro("Falha ao buscar as informações. Tente novamente mais tarde.")
       } finally {
         setLoading(false)
@@ -75,8 +75,8 @@ const Desaparecidos = () => {
         status: status as "DESAPARECIDO" | "LOCALIZADO" | undefined,
       };
       const dadosFiltrados = await DesaparecidosController.listarComFiltro(filtros);
-      if (!dadosFiltrados.ok) throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
-      setDesaparecidos(dadosFiltrados);
+      if (dadosFiltrados.status == 'error') throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
+      setDesaparecidos(dadosFiltrados.data);
       setPaginaAtual(1);
     } catch (error) {
       console.error("error:", error);
@@ -90,11 +90,12 @@ const Desaparecidos = () => {
     setLoading(true)
     setErro(null)
     try {
-      const detalhes = await DesaparecidosController.obterDetalhes(id);
-      if (!detalhes.ok) {
+      const result = await DesaparecidosController.obterDetalhes(id);
+      if (result.status == 'error') {
         throw new Error("Erro ao buscar dados. Tente novamente mais tarde.")
       }
       else {
+        const detalhes = result.data
         navigate(`/detalhes/${id}`, { state: { detalhes, nome, faixaIdadeInicial, faixaIdadeFinal, sexo, status } });
       }
     } catch (error) {

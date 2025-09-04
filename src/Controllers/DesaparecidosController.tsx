@@ -21,8 +21,10 @@ export const DesaparecidosController = {
     try {
       return await buscarDesaparecidos();
     } catch (error) {
-      console.error("Controller - Erro ao listar desaparecidos:", error);
-      return [];
+      return {
+        status: 'error',
+        message: `Controller - Erro ao listar desaparecidos: ${error}`
+      };
     }
   },
 
@@ -30,8 +32,10 @@ export const DesaparecidosController = {
     try {
       return await buscarDesaparecidosComFiltro(filtros);
     } catch (error) {
-      console.error("Controller - Erro ao listar com filtros:", error);
-      return [];
+      return {
+        status: 'error',
+        message: `Controller - Erro ao listar com filtros: ${error}`
+      };
     }
   },
 
@@ -40,7 +44,10 @@ export const DesaparecidosController = {
       return await buscarDetalheDesaparecido(id);
     } catch (error) {
       console.error("Controller - Erro ao obter detalhes:", error);
-      throw error; 
+      return {
+        status: 'error',
+        message: `Controller - Erro ao obter detalhes: ${error}`
+      };
     }
   },
 
@@ -54,8 +61,10 @@ export const DesaparecidosController = {
     try {
       return await enviarInformacoes(dados);
     } catch (error) {
-      console.error("Controller - Erro ao enviar informações:", error);
-      return null;
+      return {
+        status: 'error',
+        message: `Controller -  Erro ao enviar informações: ${error}`
+      };
     }
   },
 };

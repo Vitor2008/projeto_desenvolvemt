@@ -18,10 +18,33 @@ const Detalhes = () => {
     const filtros = location.state || {};
     const detalhes = location.state?.detalhes;
 
-    const dtDesaparecimento = formatarData(detalhes.ultimaOcorrencia.dtDesaparecimento);
-    const dtLocalizacao = formatarData(detalhes.ultimaOcorrencia.dataLocalizacao);
+    if (!detalhes) {
+        return (
+            <div className="p-4 detalhes">
+                <Link to="/" state={filtros} className='btn-voltar'>
+                    <Button text="Voltar" icon={faArrowLeft} color='bg-color-secondary' />
+                </Link>
+                <div className="h-1 bg-color-primary  w-[80vw] lg:mx-40 mx-9 rounded-full  justify-center items-center mt-4 hidden lg:flex">
+                    <div className="bg-color-primary rounded-full w-fit text-white p-2 px-8 font-bold text-xl">
+                        Detalhes da Pessoa
+                    </div>
+                </div>
+                <div className='mt-4 pt-4'>
+                    <p className="flex items-center md:justify-center gap-1 text-lg font-bold">
+                        <FontAwesomeIcon className="text-error" icon={faTriangleExclamation} />
+                        Ocorreu um erro ao buscar os detalhes do desaparecido. Tente novamente mais tarde.
+                    </p>
+                </div>
+            </div>
+        )
+    }
+
+    const dtDesaparecimento = detalhes.ultimaOcorrencia.dtDesaparecimento === null ? '' : formatarData(detalhes.ultimaOcorrencia.dtDesaparecimento);
+    const dtLocalizacao = detalhes.ultimaOcorrencia.dataLocalizacao === null ? '' : formatarData(detalhes.ultimaOcorrencia.dataLocalizacao);
+
     // const dtDesaparecimento = '';
     // const dtLocalizacao = '';
+
     const hoje = new Date().toISOString().split('T')[0];
 
     const abrirModal = () => {
@@ -100,10 +123,10 @@ const Detalhes = () => {
 
                 const result = await DesaparecidosController.enviarInformacoes(dados);
 
-                if (!result || result.erro) {
+                if (!result || result.status === 'error') {
                     Swal.fire({
                         title: "Erro ao enviar informações!",
-                        text: result?.erro || "Ocorreu um erro desconhecido.",
+                        text: result?.message || "Ocorreu um erro desconhecido.",
                         icon: "error",
                         confirmButtonText: "Ok",
                     });
@@ -122,107 +145,6 @@ const Detalhes = () => {
             }
         });
     };
-
-    if (!detalhes) {
-        return (
-            <div className="p-4 detalhes">
-                <Link to="/" state={filtros} className='btn-voltar'>
-                    <Button text="Voltar" icon={faArrowLeft} color='bg-color-secondary' />
-                </Link>
-                <div className="h-1 bg-color-primary  w-[80vw] lg:mx-40 mx-9 rounded-full  justify-center items-center mt-4 hidden lg:flex">
-                    <div className="bg-color-primary rounded-full w-fit text-white p-2 px-8 font-bold text-xl">
-                        Detalhes da Pessoa
-                    </div>
-                </div>
-                <div className='mt-4 pt-4'>
-                    <p className="flex items-center md:justify-center gap-1 text-lg font-bold">
-                        <FontAwesomeIcon className="text-error" icon={faTriangleExclamation} />
-                        Ocorreu um erro ao buscar os detalhes do desaparecido. Tente novamente mais tarde.
-                    </p>
-                </div>
-            </div>
-        )
-
-        // return <div className="detalhes p-5">
-        //     <Link to="/" state={filtros} className='btn-voltar'>
-        //         <Button text="Voltar" icon={faArrowLeft} color='bg-color-secondary' />
-        //     </Link>
-
-        //     <div className="h-1 bg-color-primary  w-[80vw] lg:mx-40 mx-9 rounded-full  justify-center items-center mt-4 hidden lg:flex">
-        //         <div className="bg-color-primary rounded-full w-fit text-white p-2 px-8 font-bold text-xl">
-        //             Detalhes da Pessoa
-        //         </div>
-        //     </div>
-
-        //     <div className='info flex flex-col md:flex-row items-center justify-between p-4 mt-4'>
-
-        //         <div className='container-info'>
-        //             <div className='header-detalhes'>
-        //                 <h1 className="text-2xl font-bold mb-1">Teste</h1>
-        //                 <h1 className="font-semibold uppercase mt-4 mb-2"><strong>Última Ocorrência: </strong></h1>
-        //             </div>
-        //             <div className='body-detalhes grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 gap-4'>
-        //                 <div className='col-detalhes'>
-        //                     <label className="block"><strong>Status:</strong></label>
-        //                     <span className={`span-status span-desaparecido`}><FontAwesomeIcon icon={faCircleExclamation} className='mr-1' /> {"Desaparecida"}</span>
-        //                 </div>
-        //                 <div className='col-detalhes'>
-        //                     <label className="block"><strong>Idade:</strong></label>
-        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={20 + ' anos'} disabled />
-        //                 </div>
-        //                 <div className='col-detalhes'>
-        //                     <label className="block"><strong>Sexo:</strong></label>
-        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={'Masculina'} disabled />
-        //                 </div>
-        //                 <div className='col-detalhes'>
-        //                     <label className="block"><strong>Data desaparecimento:</strong></label>
-        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={'24/08/2001'} disabled />
-        //                 </div>
-        //                 <div className='col-detalhes'>
-        //                     <label className="block"><strong>Local desaparecimento:</strong></label>
-        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={''} disabled />
-        //                 </div>
-        //                 <div className="col-detalhes">
-        //                     <label className="block"><strong>Vestimentas desaparecido:</strong></label>
-        //                     <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Não informado"} disabled />
-        //                 </div>
-        //                 <div className="col-detalhes">
-        //                     <label className="block"><strong>Últimas informações:</strong></label>
-        //                     <textarea className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Sem informações"} disabled />
-        //                 </div>
-        //                 <div className='col-detalhes flex items-center mt-4'>
-        //                     <Button text="Enviar Informações" icon={faArrowUpFromBracket} onClick={abrirModal} color='bg-color-primary' />
-        //                 </div>
-        //                 <>
-        //                     <div className='col-detalhes'>
-        //                         <label className="block"><strong>Data localização:</strong></label>
-        //                         <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300 font-semibold uppercase" value={'20/01/2026'} disabled />
-        //                     </div>
-        //                     <div className='col-detalhes'>
-        //                         <label className="block"><strong>Encontrada vivo:</strong></label>
-        //                         <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={"Sim"} disabled />
-        //                     </div>
-        //                 </>
-        //                 <div className='col-detalhes cartaz'>
-        //                     <Button text="Ver Cartaz" icon={faDownload} typeBtn='ahref' href={''} color='bg-color-secondary' />
-        //                 </div>
-        //             </div>
-        //             <div className='footer-detalhes'>
-
-        //             </div>
-        //         </div>
-
-        //         <div className='img-detalhe'>
-        //             <FotoPessoa
-        //                 url={''}
-        //                 alt={''}
-        //                 className="object-cover rounded-md mb-4"
-        //             />
-        //         </div>
-        //     </div>
-        // </div>
-        //     ;
-    }
 
     return (
         <div className="detalhes p-5">
