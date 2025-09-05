@@ -26,11 +26,6 @@
     line-height: 1.4;
 }
 
-.home-text span {
-    color: var(--color-primary);
-}
-
-
 @media (max-width: 840px) {
     .home {
         background: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)), url('../../assets/Img/home.png');

@@ -116,5 +116,10 @@ http://localhost:5173/
 
 ---
 
+
+# Orientações de Uso e Teste:
+
+![alt text](image.png)
+
 Qualquer dúvida ou sugestão, fique à vontade para abrir uma issue! 🚀
 

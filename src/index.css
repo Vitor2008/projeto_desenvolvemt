@@ -26,6 +26,10 @@
   color: var(--color-primary);
 }
 
+.color-secondary {
+  color: var(--color-secondary);
+}
+
 
 body {
   background-color: white;

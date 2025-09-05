@@ -15,7 +15,7 @@ const Home = () => {
     <div className="home site-container">
       <div className="home-text">
         <h1 className="font-bold text-white-800 leading-tight">
-          Conectamos pessoas e informações para <span>localizar desaparecidos</span> e reunir famílias.
+          Conectamos pessoas e informações para <span className="color-secondary">localizar desaparecidos</span> e reunir famílias.
         </h1>
         <p className="text-xl">Cada compartilhamento aumenta as
           chances de reencontro. Junte-se a essa missão e contribua para trazer esperança.
