@@ -158,4 +158,8 @@
     .body-detalhes .span-status {
         width: 70%;
     }
+
+    .img-detalhe img {
+        height: 100%;
+    }
 }

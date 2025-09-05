@@ -7,11 +7,22 @@ import { faBars, faPhone, faClock, faSearch } from '@fortawesome/free-solid-svg-
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import Button from '../Button/Button'
 
+interface NavBarItem {
+    component: string;
+    acaoHome: string;
+    acaoService: string;
+    acaoBtn: string;
+}
 
 
-const Navbar = () => {
+const Navbar: React.FC<NavBarItem> = ({ component,  acaoHome, acaoService, acaoBtn }) => {
 
   const [sticky, setSticky] = useState(false);
+
+  console.log(component);
+  console.log(acaoHome);
+  console.log(acaoService);
+  console.log(acaoBtn);
 
   useEffect(() => {
     window.addEventListener('scroll', () => {

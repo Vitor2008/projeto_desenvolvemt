@@ -174,7 +174,7 @@ const Detalhes = () => {
                         </div>
                         <div className='col-detalhes'>
                             <label className="block"><strong>Idade:</strong></label>
-                            <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={detalhes.idade + ' anos'} disabled />
+                            <input type="text" className="w-full text-sm rounded-md py-1 px-2 shadow-sm border border-gray-300" value={detalhes.idade < 1 ? 'Não informado' : detalhes.idade + ` anos`} disabled />
                         </div>
                         <div className='col-detalhes'>
                             <label className="block"><strong>Sexo:</strong></label>

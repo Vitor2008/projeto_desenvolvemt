@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import ScrollToTop from "./Helper/ScrollToTop"
 import { Suspense, lazy } from "react";
 
 const Home = lazy(() => import("./Components/Home/Home"));
@@ -14,7 +15,7 @@ import Loader from "./Components/Loader/Loader";
 function DefaultLayout() {
   return (
     <>
-      <Navbar />
+      <Navbar component='default' acaoHome='' acaoService='' acaoBtn='' />
       <Home />
       <div className="site-container bg-gradient">
         <Title
@@ -38,7 +39,7 @@ function DefaultLayout() {
 function DetalhesLayout() {
   return (
     <>
-      <Navbar />
+      <Navbar component='default' acaoHome='' acaoService='' acaoBtn='' />
       <div className="site-container">
         <Outlet />
       </div>
@@ -52,6 +53,7 @@ function DetalhesLayout() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Suspense fallback={<Loader />}>
         <Routes>
 
@@ -60,7 +62,7 @@ function App() {
           </Route>
 
           <Route element={<DetalhesLayout />}>
-            <Route path="/Detalhes/:id" element={<Detalhes />} />
+            <Route path="/detalhes/:id" element={<Detalhes />} />
           </Route>
 
         </Routes>
