@@ -27,6 +27,10 @@
     width: 60%;
 }
 
+.col-detalhes{
+    width: 95%;
+}
+
 .border-detalhes {
     width: 100%;
     border-width: 2px;

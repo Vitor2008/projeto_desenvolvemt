@@ -57,8 +57,6 @@ const Navbar: React.FC<NavBarItem> = ({ component,  acaoHome, acaoService, acaoB
             <ul className={mobileMenu ? '' : 'hide-mobile-menu flex'}>
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='home' smooth={true} offset={0} duration={500}>Home</Link></li>
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='about' smooth={true} offset={-360} duration={500}>Sobre</Link></li>
-              {/* <li className='flex items-center list-none text-[20px] font-bold'><Link to='about' smooth={true} offset={-160} duration={500}>Institucional</Link></li>
-              <li className='flex items-center list-none text-[20px] font-bold'><Link to='contact' smooth={true} offset={-260} duration={500}>Ouvidoria</Link></li> */}
               <li className='flex items-center list-none text-[20px] font-bold'><Link to='desaparecidos' smooth={true} offset={-360} duration={500}>
                 <Button text='Buscar Desaparecido' icon={faSearch} color='bg-color-primary' />
               </Link></li>
